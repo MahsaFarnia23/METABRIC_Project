@@ -79,7 +79,7 @@ data = pd.get_dummies(data, columns=multi_category_cols, drop_first=True)
 print("\nFirst Few Rows After Encoding:\n", data.head())
 print("\nData Shape After Encoding:", data.shape)
 
-
+#Visualization
 # 1️⃣ Age Distribution Plot
 plt.figure(figsize=(6, 4))
 sns.histplot(data['age_at_diagnosis'], bins=30, kde=True, color='skyblue')
