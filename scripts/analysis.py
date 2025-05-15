@@ -1,5 +1,7 @@
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # 1️⃣ Load the Dataset
 data = pd.read_csv('METABRIC_RNA_Mutation.csv')
@@ -76,3 +78,28 @@ data = pd.get_dummies(data, columns=multi_category_cols, drop_first=True)
 # 🔄 Display the first few rows and shape of the DataFrame
 print("\nFirst Few Rows After Encoding:\n", data.head())
 print("\nData Shape After Encoding:", data.shape)
+
+
+# 1️⃣ Age Distribution Plot
+plt.figure(figsize=(6, 4))
+sns.histplot(data['age_at_diagnosis'], bins=30, kde=True, color='skyblue')
+plt.title('Age at Diagnosis Distribution')
+plt.xlabel('Age at Diagnosis')
+plt.ylabel('Frequency')
+plt.show()
+
+# 2️⃣ Type of Breast Surgery Distribution
+plt.figure(figsize=(6, 4))
+sns.countplot(data=data, x='type_of_breast_surgery', palette='Set2')
+plt.title('Type of Breast Surgery')
+plt.xlabel('Surgery Type')
+plt.ylabel('Count')
+plt.show()
+
+# 3️⃣ Cancer Type Distribution
+plt.figure(figsize=(6, 4))
+sns.countplot(data=data, x='cancer_type', palette='Set1')
+plt.title('Cancer Type Distribution')
+plt.xlabel('Cancer Type')
+plt.ylabel('Count')
+plt.show()
