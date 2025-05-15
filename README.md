@@ -29,3 +29,13 @@ METABRIC_Project/
 │
 └── README.md                       # Project documentation
 ```
+## 📊 Visualizations
+
+- **Age at Diagnosis Distribution**
+  ![Age at Diagnosis](images/age_distribution.png)
+
+- **Type of Breast Surgery**
+  ![Type of Breast Surgery](images/type_of_breast_surgery.png)
+
+- **Cancer Type Distribution**
+  ![Cancer Type Distribution](images/cancer_type_distribution.png)
