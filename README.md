@@ -16,7 +16,7 @@ METABRIC_Project/
 │   └── METABRIC_RNA_Mutation.csv   # Main dataset
 │
 ├── scripts/                        # Python scripts for analysis
-│   └── analysis.py                 # Data exploration and preprocessing
+│   └── analysis.py                
 │
 ├── results/                        # Model outputs and visualizations
 │   └── plots/                      # Plots generated during analysis
