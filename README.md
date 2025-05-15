@@ -10,7 +10,7 @@ A machine learning project analyzing the METABRIC breast cancer dataset, focusin
 
 ## 📂 **Project Structure**
 
-METABRIC_Project/
+# METABRIC_Project/
 │
 ├── data/                           # Dataset files
 │   └── METABRIC_RNA_Mutation.csv   # Main dataset
@@ -28,4 +28,4 @@ METABRIC_Project/
 │   └── survival_distribution.png
 │
 └── README.md                       # Project documentation
-```
+
