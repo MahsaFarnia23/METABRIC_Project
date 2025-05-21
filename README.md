@@ -9,6 +9,18 @@ A machine learning project analyzing the METABRIC breast cancer dataset, focusin
 
 ---
 
+## Dataset
+
+This project uses the [METABRIC breast cancer dataset](https://www.kaggle.com/datasets/raghadalharbi/breast-cancer-gene-expression-profiles-metabric), which includes:
+
+* 31 clinical attributes
+* mRNA z-score expression levels for 331 genes
+* Mutation status for 175 genes
+* Data from 1,904 breast cancer patients
+
+---
+
+
 ## 📂 **Project Structure**
 ```
 METABRIC_Project/
