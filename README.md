@@ -171,8 +171,7 @@ python your_script_name.py
 ---
 
 ## 📜 License
-
-This project is for academic and non-commercial research purposes.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
