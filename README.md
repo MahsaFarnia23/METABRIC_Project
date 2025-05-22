@@ -36,7 +36,7 @@ METABRIC_Project/
 │       └── survival_analysis_by_tg_mutation_status.png
 │
 └── README.md                       # Project documentation
-
+---
 ```
 ## ⚙️ Workflow Summary
 
