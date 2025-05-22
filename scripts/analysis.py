@@ -1,105 +1,119 @@
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from lifelines import KaplanMeierFitter
+from lifelines.statistics import logrank_test
+import warnings
+warnings.filterwarnings("ignore")
 
-# 1️⃣ Load the Dataset
-data = pd.read_csv('METABRIC_RNA_Mutation.csv')
+# Set styles for plots
+sns.set(style='whitegrid')
 
-# 2️⃣ Display basic information
-print("Number of Rows and Columns:", data.shape)
-print("\nColumn Names:\n", data.columns)
-print("\nFirst Few Rows:\n", data.head())
-print("\nNumber of Missing Values:\n", data.isnull().sum().sum())
+# Load the data
+df = pd.read_csv(r'C:\Users\farm2103\project\Breast Cancer Gene Expression Profiles (METABRIC)\METABRIC_RNA_Mutation.csv')
 
-# 3️⃣ Check Data Types
-print("\nData Types:\n", data.dtypes)
+# Quick check
+print("Shape of the data:", df.shape)
 
-# 4️⃣ Statistical Summary for Numerical and Categorical Columns
-print("\nStatistical Summary for Numerical Columns:\n", data.describe())
+# Check missing values
+missing = df.isnull().sum()
+missing = missing[missing > 0].sort_values(ascending=False)
+if not missing.empty:
+    print("Missing values found in the following columns:")
+    print(missing)
+else:
+    print("No missing values!")
 
-# Get only the categorical columns
-categorical_columns = data.select_dtypes(include=['object']).columns
-print("\nStatistical Summary for Categorical Columns:\n", data[categorical_columns].describe())
+# Summary stats
+print(df.describe())
+print(df.dtypes.value_counts())
 
-# 5️⃣ Identify columns with missing values
-missing_values = data.isnull().sum()
-print("\nColumns with Missing Values:\n", missing_values[missing_values > 0])
+# Unique values in object columns
+object_cols = df.select_dtypes(include='object').columns
+for col in object_cols:
+    print(f"{col}: {df[col].nunique()} unique values")
 
-# 6️⃣ Fix mixed types: Convert problematic columns to string
-# These columns were giving DtypeWarnings
-mixed_type_columns = [678, 688, 690, 692]
-for col in mixed_type_columns:
-    data.iloc[:, col] = data.iloc[:, col].astype(str)
-
-# 7️⃣ Fill Missing Values
-# For numerical columns, fill with the mean
-numerical_cols = ['age_at_diagnosis', 'tumor_size', 'mutation_count']
-for col in numerical_cols:
-    data[col] = data[col].fillna(data[col].mean())
-
-# For categorical columns, fill with the mode (most frequent value)
-categorical_cols = [
-    'type_of_breast_surgery', 'cancer_type_detailed', 'cellularity',
-    'er_status_measured_by_ihc', 'neoplasm_histologic_grade',
-    'tumor_other_histologic_subtype', 'primary_tumor_laterality',
-    'oncotree_code', '3-gene_classifier_subtype', 'tumor_stage'
-]
-
-for col in categorical_cols:
-    data[col] = data[col].fillna(data[col].mode()[0])
-
-# Special cases
-data['death_from_cancer'] = data['death_from_cancer'].fillna(data['death_from_cancer'].mode()[0])
-data['tumor_stage'] = data['tumor_stage'].fillna(data['tumor_stage'].mode()[0])
-
-# ✅ Verify if there are still missing values
-print("\nMissing values after cleaning:\n", data.isnull().sum().sum())
-
-# 8️⃣ Label Encoding for Binary Columns
-# For columns that are binary (2 categories)
-binary_cols = ['type_of_breast_surgery', 'cancer_type']
-le = LabelEncoder()
-
-for col in binary_cols:
-    data[col] = le.fit_transform(data[col])
-
-# 9️⃣ One-Hot Encoding for Multi-Category Columns
-# For columns with more than 2 categories, use One-Hot Encoding
-multi_category_cols = [
-    'cancer_type_detailed', 'cellularity', 'er_status_measured_by_ihc',
-    'neoplasm_histologic_grade', 'tumor_other_histologic_subtype',
-    'primary_tumor_laterality', 'oncotree_code', '3-gene_classifier_subtype', 'tumor_stage'
-]
-
-# Apply One-Hot Encoding
-data = pd.get_dummies(data, columns=multi_category_cols, drop_first=True)
-
-# 🔄 Display the first few rows and shape of the DataFrame
-print("\nFirst Few Rows After Encoding:\n", data.head())
-print("\nData Shape After Encoding:", data.shape)
-
-#Visualization
-# 1️⃣ Age Distribution Plot
+# Visualization: Age at Diagnosis
 plt.figure(figsize=(6, 4))
-sns.histplot(data['age_at_diagnosis'], bins=30, kde=True, color='skyblue')
+sns.histplot(df['age_at_diagnosis'].dropna(), bins=30, kde=True, color='skyblue')
 plt.title('Age at Diagnosis Distribution')
 plt.xlabel('Age at Diagnosis')
 plt.ylabel('Frequency')
+plt.tight_layout()
 plt.show()
 
-# 2️⃣ Type of Breast Surgery Distribution
+# Visualization: Type of Breast Surgery
 plt.figure(figsize=(6, 4))
-sns.countplot(data=data, x='type_of_breast_surgery', palette='Set2')
-plt.title('Type of Breast Surgery')
+sns.countplot(data=df, x='type_of_breast_surgery', palette='Set2')
+plt.title('Type of Breast Surgery Distribution')
 plt.xlabel('Surgery Type')
 plt.ylabel('Count')
+plt.tight_layout()
 plt.show()
 
-# 3️⃣ Cancer Type Distribution
+# Visualization: Cancer Type
 plt.figure(figsize=(6, 4))
-sns.countplot(data=data, x='cancer_type', palette='Set1')
+sns.countplot(data=df, x='cancer_type', palette='Set1')
 plt.title('Cancer Type Distribution')
 plt.xlabel('Cancer Type')
 plt.ylabel('Count')
+plt.tight_layout()
 plt.show()
+
+
+# Identify survival columns
+duration_col = 'overall_survival_months' if 'overall_survival_months' in df.columns else 'os_months'
+event_col = 'overall_survival' if 'overall_survival' in df.columns else 'death_from_cancer'
+
+# Convert event column to binary (1=event/death, 0=censored)
+df[event_col] = df[event_col].apply(lambda x: 1 if str(x).lower() in ['yes', '1', 'true', 'dead'] else 0)
+
+# Find all mutation columns that end in '_mut'
+mutation_cols = [col for col in df.columns if col.endswith('_mut')]
+
+# Filter survival-ready dataframe
+surv_ready_df = df[[duration_col, event_col] + mutation_cols].dropna()
+
+# Create binary flags for each mutation and run log-rank tests
+results = []
+for gene in mutation_cols:
+    # Binary column: 0 if '0', 1 otherwise
+    surv_ready_df[f'{gene}_bin'] = surv_ready_df[gene].apply(lambda x: 0 if x == '0' else 1)
+    
+    mutated = surv_ready_df[surv_ready_df[f'{gene}_bin'] == 1]
+    wildtype = surv_ready_df[surv_ready_df[f'{gene}_bin'] == 0]
+
+    if len(mutated) > 10 and len(wildtype) > 10:  # Avoid small groups
+        res = logrank_test(
+            wildtype[duration_col], mutated[duration_col],
+            event_observed_A=wildtype[event_col], event_observed_B=mutated[event_col]
+        )
+        results.append({
+            'gene': gene,
+            'p_value': res.p_value,
+            'test_statistic': res.test_statistic
+        })
+
+# Create result dataframe
+results_df = pd.DataFrame(results)
+results_df = results_df.sort_values('p_value')
+print("\nTop genes by statistical significance:")
+print(results_df.head(10))
+
+# Plot top 3 genes
+top_genes = results_df.head(3)['gene']
+kmf = KaplanMeierFitter()
+
+for gene in top_genes:
+    plt.figure(figsize=(8, 6))
+    surv_ready_df[f'{gene}_bin'] = surv_ready_df[gene].apply(lambda x: 0 if x == '0' else 1)
+    for label, group in surv_ready_df.groupby(f'{gene}_bin'):
+        label_name = f"{gene} Mutated" if label == 1 else f"{gene} Wildtype"
+        kmf.fit(group[duration_col], group[event_col], label=label_name)
+        kmf.plot_survival_function()
+    plt.title(f'Survival Analysis by {gene} Mutation Status')
+    plt.xlabel('Time (months)')
+    plt.ylabel('Survival Probability')
+    plt.grid(True)
+    plt.show()
