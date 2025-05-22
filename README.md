@@ -58,8 +58,11 @@ METABRIC_Project/
 ## 📊 Visualizations
 To understand the clinical landscape, we visualized important patient features:
 
-- **Age at Diagnosis Distribution**
-- A histogram showing the distribution of age among patients.
+- **Age at Diagnosis Distribution**: A histogram showing the distribution of age among patients.
+  
+```python
+sns.histplot(df['age_at_diagnosis'], bins=30, kde=True)
+```
   ![Age at Diagnosis](images/age_distribution.png)
 
 - **Type of Breast Surgery**
