@@ -73,7 +73,7 @@ sns.histplot(df['age_at_diagnosis'], bins=30, kde=True)
 ```python
 sns.countplot(x='type_of_breast_surgery', data=df)
 ```
-  ![Type of Breast Surgery](results/plots/type_of_breast_surgery.png)
+  ![Type of Breast Surgery](results/plots/type_of_breast_surgery_distribution.png)
 
 - **Cancer Type Distribution**: A countplot for the distribution of different cancer types.
 
