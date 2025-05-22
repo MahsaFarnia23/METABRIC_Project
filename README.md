@@ -56,8 +56,10 @@ METABRIC_Project/
 
 
 ## 📊 Visualizations
+To understand the clinical landscape, we visualized important patient features:
 
 - **Age at Diagnosis Distribution**
+- A histogram showing the distribution of age among patients.
   ![Age at Diagnosis](images/age_distribution.png)
 
 - **Type of Breast Surgery**
