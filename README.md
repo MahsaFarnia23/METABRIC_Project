@@ -156,6 +156,5 @@ This project is for academic and non-commercial research purposes.
 
 ---
 
-Would you like me to export this as a `.md` file ready for upload to your GitHub repo?
 
 
