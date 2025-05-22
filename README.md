@@ -138,16 +138,16 @@ pip install pandas numpy matplotlib seaborn lifelines
 This section highlights survival differences between patients with and without specific gene mutations, using Kaplan-Meier survival curves.
 
 ### TP53 Mutation Status
-![TP53 Survival Curve](images/survival_analysis_by_TP53_mutation_status.png)
+![TP53 Survival Curve](results/plots/survival_analysis_by_TP53_mutation_status.png)
 
 ### ARID1B Mutation Status
-![ARID1B Survival Curve](images/survival_analysis_by_arid1b_mutation_status.png)
+![ARID1B Survival Curve](results/plots/survival_analysis_by_arid1b_mutation_status.png)
 
 ### MAP3K1 Mutation Status
-![MAP3K1 Survival Curve](images/survival_analysis_by_map3k1_mutation_status.png)
+![MAP3K1 Survival Curve](results/plots/survival_analysis_by_map3k1_mutation_status.png)
 
 ### TG Mutation Status
-![TG Survival Curve](images/survival_analysis_by_tg_mutation_status.png)
+![TG Survival Curve](results/plots/survival_analysis_by_tg_mutation_status.png)
 
 
 ---
