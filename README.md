@@ -1,22 +1,17 @@
 
-# METABRIC Breast Cancer Analysis
+# 🔬 Survival Analysis of Breast Cancer Patients Based on Gene Mutation Status (METABRIC Dataset)
 
-A machine learning project analyzing the METABRIC breast cancer dataset, focusing on:
-- Gene mutations
-- Clinical features
-- Survival analysis
-- Subtype classification
+This project conducts a **survival analysis** using the **METABRIC RNA + Mutation dataset**, focusing on how mutations in key genes affect patient outcomes. It includes **descriptive statistics**, **data visualization**, **mutation profiling**, and **Kaplan-Meier survival analysis** with **log-rank testing**.
 
----
 
 ## Dataset
-
-This project uses the [METABRIC breast cancer dataset](https://www.kaggle.com/datasets/raghadalharbi/breast-cancer-gene-expression-profiles-metabric), which includes:
-
-* 31 clinical attributes
+* **Name**: `METABRIC_RNA_Mutation.csv`
+* **Source**: [METABRIC breast cancer dataset](https://www.kaggle.com/datasets/raghadalharbi/breast-cancer-gene-expression-profiles-metabric), which includes:
+* **Content**:
+* 31 clinical metadata
 * mRNA z-score expression levels for 331 genes
-* Mutation status for 175 genes
-* Data from 1,904 breast cancer patients
+* Gene mutation status for 175 genes
+* Survival outcome data for over 1,900 breast cancer patients
 
 ---
 
@@ -57,19 +52,8 @@ METABRIC_Project/
 
 ---
 
-# 🔬 Survival Analysis of Breast Cancer Patients Based on Gene Mutation Status (METABRIC Dataset)
 
-This project conducts a **survival analysis** using the **METABRIC RNA + Mutation dataset**, focusing on how mutations in key genes affect patient outcomes. It includes **descriptive statistics**, **data visualization**, **mutation profiling**, and **Kaplan-Meier survival analysis** with **log-rank testing**.
 
----
-
-## 📁 Dataset
-
-* **Name**: `METABRIC_RNA_Mutation.csv`
-* **Source**: METABRIC (Molecular Taxonomy of Breast Cancer International Consortium)
-* **Content**: Clinical metadata, gene mutation statuses, and survival outcome data for over 1,900 breast cancer patients.
-
----
 
 ## ⚙️ Workflow Summary
 
