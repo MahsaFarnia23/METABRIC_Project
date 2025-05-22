@@ -38,6 +38,23 @@ METABRIC_Project/
 │
 └── README.md                       # Project documentation
 ```
+## ⚙️ Workflow Summary
+
+### 1️⃣ Data Loading and Inspection
+
+* Load and inspect dataset structure
+* Detect and report missing values
+* Explore unique values for each categorical column
+
+### 2️⃣ Descriptive Statistics
+
+* Numerical summary using `.describe()`
+* Categorical summary using `.describe(include='object')`
+
+---
+
+
+
 ## 📊 Visualizations
 
 - **Age at Diagnosis Distribution**
@@ -56,20 +73,7 @@ METABRIC_Project/
 
 
 
-## ⚙️ Workflow Summary
 
-### 1️⃣ Data Loading and Inspection
-
-* Load and inspect dataset structure
-* Detect and report missing values
-* Explore unique values for each categorical column
-
-### 2️⃣ Descriptive Statistics
-
-* Numerical summary using `.describe()`
-* Categorical summary using `.describe(include='object')`
-
----
 
 ## 📊 Exploratory Visualizations
 
