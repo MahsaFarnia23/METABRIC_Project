@@ -162,14 +162,6 @@ python your_script_name.py
 
 ---
 
-## 🧠 Future Directions
-
-* Apply **multivariate Cox regression** models
-* Visualize gene-gene interactions or mutational burden
-* Correlate mutations with PAM50 or other molecular subtypes
-
----
-
 ## 📜 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
