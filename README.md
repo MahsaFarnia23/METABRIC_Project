@@ -6,12 +6,12 @@ This project conducts a **survival analysis** using the **METABRIC RNA + Mutatio
 
 ## Dataset
 * **Name**: `METABRIC_RNA_Mutation.csv`
-* **Source**: [METABRIC breast cancer dataset](https://www.kaggle.com/datasets/raghadalharbi/breast-cancer-gene-expression-profiles-metabric), which includes:
+* **Source**: [METABRIC breast cancer dataset](https://www.kaggle.com/datasets/raghadalharbi/breast-cancer-gene-expression-profiles-metabric)
 * **Content**:
-* 31 clinical metadata
-* mRNA z-score expression levels for 331 genes
-* Gene mutation status for 175 genes
-* Survival outcome data for over 1,900 breast cancer patients
+- 31 clinical metadata
+- mRNA z-score expression levels for 331 genes
+- Gene mutation status for 175 genes
+- Survival outcome data for over 1,900 breast cancer patients
 
 ---
 
