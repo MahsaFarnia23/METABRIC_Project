@@ -65,50 +65,20 @@ sns.histplot(df['age_at_diagnosis'], bins=30, kde=True)
 ```
   ![Age at Diagnosis](images/age_distribution.png)
 
-- **Type of Breast Surgery**
-  ![Type of Breast Surgery](images/type_of_breast_surgery.png)
-
-- **Cancer Type Distribution**
-  ![Cancer Type Distribution](images/cancer_type_distribution.png)
-
-
-
----
-
-
-
-
-
-
-## 📊 Exploratory Visualizations
-
-To understand the clinical landscape, we visualized important patient features:
-
-### 🎂 Age at Diagnosis
-
-A histogram showing the distribution of age among patients.
-
-```python
-sns.histplot(df['age_at_diagnosis'], bins=30, kde=True)
-```
-
-### 🏥 Type of Breast Surgery
-
-A countplot showing frequencies of surgery types.
+- **Type of Breast Surgery**: A countplot showing frequencies of surgery types.
 
 ```python
 sns.countplot(x='type_of_breast_surgery', data=df)
 ```
+  ![Type of Breast Surgery](images/type_of_breast_surgery.png)
 
-### 🧬 Cancer Type Distribution
-
-A countplot for the distribution of different cancer types.
+- **Cancer Type Distribution**: A countplot for the distribution of different cancer types.
 
 ```python
 sns.countplot(x='cancer_type', data=df)
 ```
+  ![Cancer Type Distribution](images/cancer_type_distribution.png)
 
-These visualizations provide a clinical overview and help contextualize the mutation analysis.
 
 ---
 
