@@ -17,26 +17,26 @@ This project conducts a **survival analysis** using the **METABRIC RNA + Mutatio
 ---
 
 
-## 📂 **Project Structure**
-```
 METABRIC_Project/
 │
 ├── data/                           # Dataset files
 │   └── METABRIC_RNA_Mutation.csv   # Main dataset
 │
 ├── scripts/                        # Python scripts for analysis
-│   └── analysis.py                
+│   └── analysis.py                 # Main analysis script
 │
-├── results/                        # Model outputs and visualizations
+├── results/                        # Analysis outputs and visualizations
 │   └── plots/                      # Plots generated during analysis
-│
-├── images/                         # Plots for documentation
-│   ├── age_distribution.png
-│   ├── tumor_stage_distribution.png
-│   ├── mutation_heatmap.png
-│   └── survival_distribution.png
+│       ├── age_distribution.png
+│       ├── type_of_breast_surgery_distribution.png
+│       ├── cancer_type_distribution.png
+│       ├── survival_analysis_by_TP53_mutation_status.png
+│       ├── survival_analysis_by_arid1b_mutation_status.png
+│       ├── survival_analysis_by_map3k1_mutation_status.png
+│       └── survival_analysis_by_tg_mutation_status.png
 │
 └── README.md                       # Project documentation
+
 ```
 ## ⚙️ Workflow Summary
 
