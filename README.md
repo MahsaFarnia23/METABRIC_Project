@@ -54,7 +54,6 @@ METABRIC_Project/
   ![Cancer Type Distribution](images/cancer_type_distribution.png)
 
 
-  Absolutely! Here is the **updated and professional `README.md`** including the **visualization section**:
 
 ---
 
