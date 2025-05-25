@@ -5,6 +5,8 @@ import seaborn as sns
 from lifelines import KaplanMeierFitter
 from lifelines.statistics import logrank_test
 import warnings
+from lifelines import CoxPHFitter
+
 warnings.filterwarnings("ignore")
 
 # Set styles for plots
@@ -118,3 +120,31 @@ for gene in top_genes:
     plt.grid(True)
     plt.show()
 
+
+#Add Cox Proportional Hazards Model 
+# Load dataset
+df = pd.read_csv("METABRIC_RNA_Mutation.csv")
+
+# Identify survival columns
+duration_col = 'overall_survival_months' if 'overall_survival_months' in df.columns else 'os_months'
+event_col = 'overall_survival' if 'overall_survival' in df.columns else 'death_from_cancer'
+
+# Convert event to binary
+df[event_col] = df[event_col].apply(lambda x: 1 if str(x).lower() in ['yes', '1', 'true', 'dead'] else 0)
+
+# Select mutation columns of interest
+selected_genes = ['tp53_mut', 'map3k1_mut', 'tg_mut', 'arid1b_mut']
+
+# Create binary indicators
+for gene in selected_genes:
+    df[f"{gene}_bin"] = df[gene].apply(lambda x: 0 if x == '0' else 1)
+
+# Prepare input for Cox model
+cox_df = df[[duration_col, event_col] + [f"{gene}_bin" for gene in selected_genes]].dropna()
+
+# Fit model
+cph = CoxPHFitter()
+cph.fit(cox_df, duration_col=duration_col, event_col=event_col)
+
+# Print results
+cph.print_summary()
