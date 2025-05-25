@@ -150,6 +150,31 @@ This section highlights survival differences between patients with and without s
 
 
 ---
+## Cox Proportional Hazards Model
+
+To deepen the survival analysis beyond Kaplan-Meier estimation, we used a Cox Proportional Hazards Model on four key mutations (`TP53`, `MAP3K1`, `TG`, `ARID1B`). This approach models the hazard of death over time while controlling for other variables.
+
+### 📈 Key Findings:
+
+| Gene        | Hazard Ratio (HR) | Interpretation                                              | p-value |
+|-------------|-------------------|--------------------------------------------------------------|---------|
+| `TP53`      | 0.98              | Not statistically significant (HR ~1, p = 0.82)             | 0.82    |
+| `MAP3K1`    | 0.72              | ~28% reduced risk of death when mutated (p = 0.01)          | 0.01    |
+| `TG`        | 0.69              | ~31% reduced risk of death when mutated (p = 0.02)          | 0.02    |
+| `ARID1B`    | 0.45              | ~55% reduced risk of death when mutated (p < 0.005)         | <0.005  |
+
+> **Note**: Hazard Ratios (HR) below 1 indicate a protective effect; HR > 1 indicates increased risk. `ARID1B`, `MAP3K1`, and `TG` mutations appear to be associated with significantly **longer survival times** in this dataset.
+
+### 📊 Model Details:
+
+- **Concordance Index**: 0.54  
+- **Partial AIC**: 9859.24  
+- **Log-likelihood ratio test**: p < 0.005
+
+We conclude that certain gene mutations (especially `ARID1B` and `MAP3K1`) may have potential prognostic value for breast cancer outcomes in the METABRIC cohort.
+
+----
+
 ## ▶️ How to Run
 
 1. Save the dataset as `METABRIC_RNA_Mutation.csv` in your project directory.
