@@ -174,7 +174,43 @@ To deepen the survival analysis beyond Kaplan-Meier estimation, we used a Cox Pr
 
 We conclude that certain gene mutations (especially `ARID1B` and `MAP3K1`) may have potential prognostic value for breast cancer outcomes in the METABRIC cohort.
 
-----
+---
+
+### 🧪 Feature Engineering from mRNA Expression Data
+
+To enhance the dataset and enable more effective modeling and analysis, we engineered several features based on mRNA gene expression:
+
+#### 1. **Gene Expression Average**
+
+For each patient, we computed the **mean expression value across all genes**. This feature serves as a simple yet informative summary of the overall transcriptional activity within each tumor sample. It can help distinguish between samples with generally high or low expression levels.
+
+```python
+df['GeneExpression_Average'] = df_expression.mean(axis=1)
+```
+
+#### 2. **Principal Component Analysis (PCA)**
+
+Given the high dimensionality of gene expression data, we applied **PCA** to reduce the number of features while preserving the most important variance in the data. We extracted the **top 5 principal components (PCA\_1 to PCA\_5)**, which can capture global expression patterns and relationships between samples in a compressed form.
+
+```python
+from sklearn.decomposition import PCA
+pca = PCA(n_components=5)
+pca_components = pca.fit_transform(df_expression.fillna(0))
+```
+
+These new features are especially useful for downstream tasks such as:
+
+* Visualizing patient clusters
+* Feeding into predictive models
+* Exploring associations with clinical outcomes (e.g., survival)
+
+#### ➕ Resulting Features:
+
+* `GeneExpression_Average`
+* `PCA_1`, `PCA_2`, `PCA_3`, `PCA_4`, `PCA_5`
+
+---
+
 
 ## ▶️ How to Run
 
