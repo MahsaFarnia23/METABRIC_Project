@@ -209,7 +209,7 @@ These new features are especially useful for downstream tasks such as:
 * `GeneExpression_Average`
 * `PCA_1`, `PCA_2`, `PCA_3`, `PCA_4`, `PCA_5`
 Below is a preview of the engineered features, including the average gene expression per patient and the top 5 principal components derived from PCA:
-```
+  
 | patient_id | GeneExpression_Average | PCA_1     | PCA_2     | PCA_3     | PCA_4     | PCA_5     |
 |------------|------------------------|-----------|-----------|-----------|-----------|-----------|
 | 0          | 0.5145                 | -3921.93  | 28.14     | -3.05     | 7.00      | -4.63     |
@@ -217,7 +217,7 @@ Below is a preview of the engineered features, including the average gene expres
 | 5          | 0.4280                 | -3916.85  | 51.68     | -9.46     | 10.42     | -1.12     |
 | 6          | 0.5349                 | -3915.85  | 52.48     | 0.84      | 7.83      | 1.87      |
 | 8          | 0.1780                 | -3914.24  | -71.75    | 11.61     | -0.31     | 2.30      |
-```
+
 ---
 
 
