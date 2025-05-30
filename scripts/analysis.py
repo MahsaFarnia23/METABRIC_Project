@@ -6,6 +6,7 @@ from lifelines import KaplanMeierFitter
 from lifelines.statistics import logrank_test
 import warnings
 from lifelines import CoxPHFitter
+from sklearn.decomposition import PCA
 
 warnings.filterwarnings("ignore")
 
@@ -148,3 +149,29 @@ cph.fit(cox_df, duration_col=duration_col, event_col=event_col)
 
 # Print results
 cph.print_summary()
+
+#Gene Expression Feature Engineering
+
+# Step 1: Select numeric columns (assumed to be gene expression + mutation)
+df_numeric = df.select_dtypes(include=[np.number])
+
+# Step 2: Remove known clinical numeric columns (keep gene-related features only)
+clinical_cols = ['age_at_diagnosis', 'chemotherapy', 'cohort']
+df_expression = df_numeric.drop(columns=[col for col in clinical_cols if col in df_numeric.columns])
+
+# Step 3: Compute average gene expression per patient
+df['GeneExpression_Average'] = df_expression.mean(axis=1)
+
+# Step 4: Perform PCA to extract top 5 principal components
+pca = PCA(n_components=5)
+pca_components = pca.fit_transform(df_expression.fillna(0))
+
+# Step 5: Add PCA features to the original DataFrame
+for i in range(5):
+    df[f'PCA_{i+1}'] = pca_components[:, i]
+
+# Step 6 (optional): Save to a new CSV file
+df[['patient_id', 'GeneExpression_Average', 'PCA_1', 'PCA_2', 'PCA_3', 'PCA_4', 'PCA_5']].to_csv("METABRIC_features.csv", index=False)
+
+# Preview new features
+print(df[['patient_id', 'GeneExpression_Average', 'PCA_1', 'PCA_2', 'PCA_3', 'PCA_4', 'PCA_5']].head())
