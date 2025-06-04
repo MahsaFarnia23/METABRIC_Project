@@ -278,6 +278,15 @@ Predict whether a patient survived **≥ 60 months** using engineered features.
 * Visualized both bar and beeswarm plots
 
 ---
+### SHAP Feature Importance (Random Forest)
+
+We used SHAP values to interpret the Random Forest classifier trained on engineered gene expression features. The bar plot summarizes global feature importance, while the beeswarm plot visualizes individual-level impacts.
+
+- **Bar Plot**
+  ![SHAP Bar](results/plots/shap_summary_bar.png)
+
+- **Beeswarm Plot**
+  ![SHAP Beeswarm](results/plots/shap_beeswarm.png)
 
 ## ▶️ How to Run
 
