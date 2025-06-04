@@ -294,9 +294,9 @@ We used SHAP values to interpret the Random Forest classifier trained on enginee
 2. Run the Python script:
 
 ```bash
-python your_script_name.py
+pip install pandas numpy matplotlib seaborn lifelines scikit-learn shap
+python analysis.py
 ```
-
 ---
 
 ## 📜 License
@@ -341,31 +341,6 @@ Predict whether a patient survived **≥ 60 months** using engineered features.
 
 * Used `shap.TreeExplainer` to understand feature importance
 * Visualized both bar and beeswarm plots
-
----
-
-## 📂 Project Structure
-
-```
-METABRIC_Project/
-│
-├── data/
-│   ├── METABRIC_RNA_Mutation.csv
-│   └── METABRIC_features.csv
-│
-├── scripts/
-│   └── analysis.py
-│
-├── results/
-│   └── plots/
-│       ├── survival_analysis_by_*.png
-│       ├── age_distribution.png
-│       ├── shap_summary_bar.png
-│       ├── shap_beeswarm.png
-│       └── roc_curve.png
-│
-└── README.md
-```
 
 ---
 
