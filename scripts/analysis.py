@@ -20,7 +20,7 @@ warnings.filterwarnings("ignore")
 sns.set(style='whitegrid')
 
 # Load the data
-df = pd.read_csv(r'C:\Users\farm2103\project\Breast Cancer Gene Expression Profiles (METABRIC)\METABRIC_RNA_Mutation.csv')
+df = pd.read_csv('data/METABRIC_RNA_Mutation.csv')
 
 # Quick check
 print("Shape of the data:", df.shape)
@@ -186,8 +186,9 @@ print(df[['patient_id', 'GeneExpression_Average', 'PCA_1', 'PCA_2', 'PCA_3', 'PC
 # -------------------------------
 # 1. Load and Merge Data
 # -------------------------------
-df = pd.read_csv(r'C:\Users\farm2103\project\Breast Cancer Gene Expression Profiles (METABRIC)\METABRIC_RNA_Mutation.csv')
-features_df = pd.read_csv(r'C:\Users\farm2103\project\Breast Cancer Gene Expression Profiles (METABRIC)\METABRIC_features.csv')
+df = pd.read_csv(r'data/METABRIC_RNA_Mutation.csv')
+
+features_df = pd.read_csv(r'data/METABRIC_features.csv')
 
 # Ensure patient_id is same type
 df["patient_id"] = df["patient_id"].astype(str)
