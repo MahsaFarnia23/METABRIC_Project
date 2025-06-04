@@ -177,7 +177,7 @@ for i in range(5):
     df[f'PCA_{i+1}'] = pca_components[:, i]
 
 # Step 6 (optional): Save to a new CSV file
-df[['patient_id', 'GeneExpression_Average', 'PCA_1', 'PCA_2', 'PCA_3', 'PCA_4', 'PCA_5']].to_csv("METABRIC_features.csv", index=False)
+df[['patient_id', 'GeneExpression_Average', 'PCA_1', 'PCA_2', 'PCA_3', 'PCA_4', 'PCA_5']].to_csv("data/METABRIC_features.csv", index=False)
 
 # Preview new features
 print(df[['patient_id', 'GeneExpression_Average', 'PCA_1', 'PCA_2', 'PCA_3', 'PCA_4', 'PCA_5']].head())
