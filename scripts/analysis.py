@@ -7,6 +7,12 @@ from lifelines.statistics import logrank_test
 import warnings
 from lifelines import CoxPHFitter
 from sklearn.decomposition import PCA
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import roc_auc_score, confusion_matrix, classification_report, RocCurveDisplay
+from sklearn.model_selection import train_test_split
+import shap
+
+
 
 warnings.filterwarnings("ignore")
 
@@ -175,3 +181,95 @@ df[['patient_id', 'GeneExpression_Average', 'PCA_1', 'PCA_2', 'PCA_3', 'PCA_4', 
 
 # Preview new features
 print(df[['patient_id', 'GeneExpression_Average', 'PCA_1', 'PCA_2', 'PCA_3', 'PCA_4', 'PCA_5']].head())
+
+
+# -------------------------------
+# 1. Load and Merge Data
+# -------------------------------
+df = pd.read_csv(r'C:\Users\farm2103\project\Breast Cancer Gene Expression Profiles (METABRIC)\METABRIC_RNA_Mutation.csv')
+features_df = pd.read_csv(r'C:\Users\farm2103\project\Breast Cancer Gene Expression Profiles (METABRIC)\METABRIC_features.csv')
+
+# Ensure patient_id is same type
+df["patient_id"] = df["patient_id"].astype(str)
+features_df["patient_id"] = features_df["patient_id"].astype(str)
+
+# Merge features
+df = df.merge(features_df, on="patient_id", how="inner")
+
+# -------------------------------
+# 2. Create Survival Label
+# -------------------------------
+# Binary label: 1 = survived ≥ 60 months, 0 = short survival
+df['Survival_Group'] = df['overall_survival_months'].apply(lambda x: 1 if x >= 60 else 0)
+
+# -------------------------------
+# 3. Prepare Features & Target
+# -------------------------------
+feature_cols = ['GeneExpression_Average', 'PCA_1', 'PCA_2', 'PCA_3', 'PCA_4', 'PCA_5']
+X = df[feature_cols]
+y = df['Survival_Group']
+
+# Drop missing values
+valid_idx = y.notna() & X.notna().all(axis=1)
+X = X[valid_idx]
+y = y[valid_idx]
+
+# -------------------------------
+# 4. Train/Test Split
+# -------------------------------
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, stratify=y, random_state=42
+)
+
+# -------------------------------
+# 5. Train Random Forest
+# -------------------------------
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf.fit(X_train, y_train)
+
+# -------------------------------
+# 6. Evaluate Model
+# -------------------------------
+y_pred = rf.predict(X_test)
+y_prob = rf.predict_proba(X_test)[:, 1]
+
+# Metrics
+roc_auc = roc_auc_score(y_test, y_prob)
+conf_matrix = confusion_matrix(y_test, y_pred)
+report = classification_report(y_test, y_pred)
+
+# Print evaluation
+print(f"ROC AUC Score: {roc_auc:.3f}")
+print("Confusion Matrix:")
+print(conf_matrix)
+print("Classification Report:")
+print(report)
+
+# ROC Curve Plot
+RocCurveDisplay.from_estimator(rf, X_test, y_test)
+plt.title(f"Random Forest ROC Curve (AUC = {roc_auc:.2f})")
+plt.grid(True)
+plt.show()
+
+
+
+# -------------------------------
+# 7. SHAP Interpretation (Sample-limited for memory efficiency)
+# -------------------------------
+
+# Take a subset of the test set
+X_test_sample = X_test.sample(n=100, random_state=42)
+
+# Create the SHAP explainer and compute values
+explainer = shap.Explainer(rf, X_train)
+shap_values = explainer(X_test_sample)
+
+# Save SHAP summary (bar plot)
+shap.summary_plot(shap_values, X_test_sample, plot_type="bar", show=False)
+plt.savefig("shap_summary_bar.png", bbox_inches="tight")
+plt.clf()
+
+# Save SHAP beeswarm plot
+shap.summary_plot(shap_values, X_test_sample, show=False)
+plt.savefig("shap_beeswarm.png", bbox_inches="tight")
+plt.clf()
