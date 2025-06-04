@@ -130,7 +130,7 @@ for gene in top_genes:
 
 #Add Cox Proportional Hazards Model 
 # Load dataset
-df = pd.read_csv("METABRIC_RNA_Mutation.csv")
+df = pd.read_csv("data/METABRIC_RNA_Mutation.csv")
 
 # Identify survival columns
 duration_col = 'overall_survival_months' if 'overall_survival_months' in df.columns else 'os_months'
