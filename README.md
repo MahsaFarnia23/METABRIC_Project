@@ -1,8 +1,9 @@
 
-# 🔬 Survival Analysis of Breast Cancer Patients Based on Gene Mutation Status (METABRIC Dataset)
+# 🔬 Survival Analysis and Machine Learning Prediction in Breast Cancer Patients (METABRIC Dataset)
 
-This project conducts a **survival analysis** using the **METABRIC RNA + Mutation dataset**, focusing on how mutations in key genes affect patient outcomes. It includes **descriptive statistics**, **data visualization**, **mutation profiling**, and **Kaplan-Meier survival analysis** with **log-rank testing**.
+This project analyzes survival outcomes in breast cancer patients using the **METABRIC RNA + Mutation dataset**, combining classical survival analysis and machine learning-based classification. The pipeline includes **descriptive statistics**, **data visualization**, **mutation profiling**, **Kaplan-Meier survival analysis**, **Cox Proportional Hazards modeling**, **feature engineering from gene expression**, and **binary classification (long vs short survival)** using **Random Forest** and **SHAP** for model interpretation.
 
+---
 
 ## 🧾 Dataset
 
@@ -13,7 +14,6 @@ This project conducts a **survival analysis** using the **METABRIC RNA + Mutatio
   -  mRNA z-score expression levels for 331 genes  
   -  Gene mutation status for 175 genes  
   -  Survival outcome data for over 1,900 breast cancer patients  
-
 
 
 ---
@@ -35,6 +35,9 @@ METABRIC_Project/
 │       ├── survival_analysis_by_arid1b_mutation_status.png
 │       ├── survival_analysis_by_map3k1_mutation_status.png
 │       └── survival_analysis_by_tg_mutation_status.png
+│       ├── shap_summary_bar.png
+│       ├── shap_beeswarm.png
+│       └── roc_curve.png
 │
 └── README.md                       # Project documentation
 ```
@@ -43,19 +46,41 @@ METABRIC_Project/
 
 ## ⚙️ Workflow Summary
 
-### 1️⃣ Data Loading and Inspection
+### 1️⃣  Data Exploration & Visualization
 
 * Load and inspect dataset structure
 * Detect and report missing values
 * Explore unique values for each categorical column
+* Visualize:
 
-### 2️⃣ Descriptive Statistics
+  * Age at Diagnosis
+  * Type of Breast Surgery
+  * Cancer Type
 
-* Numerical summary using `.describe()`
-* Categorical summary using `.describe(include='object')`
+
+### 2️⃣ Mutation-Based Survival Analysis
+
+* Create binary flags for mutation columns (`_mut` suffix)
+* Kaplan-Meier estimator with log-rank test for top genes
+* Visualize survival difference for top 3 genes
+
+### 3️⃣ Cox Proportional Hazards Model
+
+* Fit multivariate Cox model on top mutated genes
+* Interpret hazard ratios
 
 ---
 
+## 🧪 Feature Engineering from mRNA Expression
+
+### ➕ Added Features:
+
+* `GeneExpression_Average` = mean expression per patient
+* `PCA_1` to `PCA_5` = top 5 principal components from expression matrix
+
+These features are saved to `METABRIC_features.csv` for downstream ML.
+
+---
 
 
 ## 📊 Visualizations
@@ -241,59 +266,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 
 
-# 🔬 Survival Analysis and Machine Learning Prediction in Breast Cancer Patients (METABRIC Dataset)
 
-This project analyzes survival outcomes in breast cancer patients using the **METABRIC RNA + Mutation dataset**, combining classical survival analysis and machine learning-based classification. The pipeline includes **mutation profiling**, **Kaplan-Meier survival analysis**, **Cox Proportional Hazards modeling**, **feature engineering from gene expression**, and **binary classification (long vs short survival)** using **Random Forest** and **SHAP** for model interpretation.
-
----
-
-## 🧾 Dataset
-
-* **Name**: `METABRIC_RNA_Mutation.csv`
-* **Source**: [METABRIC dataset on Kaggle](https://www.kaggle.com/datasets/raghadalharbi/breast-cancer-gene-expression-profiles-metabric)
-* **Content**:
-
-  * Clinical metadata
-  * Gene mutation status
-  * mRNA expression levels (z-scores)
-  * Survival outcome data for \~1900 patients
-
----
-
-## ⚙️ Workflow Summary
-
-### 1️⃣ Data Exploration & Visualization
-
-* Load and inspect missing values
-* Visualize:
-
-  * Age at Diagnosis
-  * Type of Breast Surgery
-  * Cancer Type
-
-### 2️⃣ Mutation-Based Survival Analysis
-
-* Create binary flags for mutation columns (`_mut` suffix)
-* Kaplan-Meier estimator with log-rank test for top genes
-* Visualize survival difference for top 3 genes
-
-### 3️⃣ Cox Proportional Hazards Model
-
-* Fit multivariate Cox model on top mutated genes
-* Interpret hazard ratios
-
----
-
-## 🧪 Feature Engineering from mRNA Expression
-
-### ➕ Added Features:
-
-* `GeneExpression_Average` = mean expression per patient
-* `PCA_1` to `PCA_5` = top 5 principal components from expression matrix
-
-These features are saved to `METABRIC_features.csv` for downstream ML.
-
----
 
 ## 🤖 Machine Learning: Predicting Survival Group
 
