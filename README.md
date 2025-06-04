@@ -71,17 +71,6 @@ METABRIC_Project/
 
 ---
 
-## 🧪 Feature Engineering from mRNA Expression
-
-### ➕ Added Features:
-
-* `GeneExpression_Average` = mean expression per patient
-* `PCA_1` to `PCA_5` = top 5 principal components from expression matrix
-
-These features are saved to `METABRIC_features.csv` for downstream ML.
-
----
-
 
 ## 📊 Visualizations
 To understand the clinical landscape, we visualized important patient features:
@@ -245,7 +234,50 @@ Below is a preview of the engineered features, including the average gene expres
 | 8          | 0.1780                 | -3914.24  | -71.75    | 11.61     | -0.31     | 2.30      |
 
 ---
+## 🧪 Feature Engineering from mRNA Expression
 
+### ➕ Added Features:
+
+* `GeneExpression_Average` = mean expression per patient
+* `PCA_1` to `PCA_5` = top 5 principal components from expression matrix
+
+These features are saved to `METABRIC_features.csv` for downstream ML.
+
+---
+## 🤖 Machine Learning: Predicting Survival Group
+
+### 📌 Task:
+
+Predict whether a patient survived **≥ 60 months** using engineered features.
+
+### 🔍 Features Used:
+
+* `GeneExpression_Average`, `PCA_1`, `PCA_2`, `PCA_3`, `PCA_4`, `PCA_5`
+
+### ✅ Model:
+
+* `RandomForestClassifier` from scikit-learn
+
+### 📈 Evaluation:
+
+* **ROC AUC Score**: `0.999`
+* **Confusion Matrix**:
+
+  ```
+  [[ 94   0]
+   [  4 283]]
+  ```
+* **Classification Report**:
+
+  * Precision: 0.96 (class 0), 1.00 (class 1)
+  * Accuracy: 0.99
+
+### 🧠 Model Interpretation (SHAP):
+
+* Used `shap.TreeExplainer` to understand feature importance
+* Visualized both bar and beeswarm plots
+
+---
 
 ## ▶️ How to Run
 
