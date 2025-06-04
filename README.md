@@ -241,6 +241,132 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 
 
+# 🔬 Survival Analysis and Machine Learning Prediction in Breast Cancer Patients (METABRIC Dataset)
+
+This project analyzes survival outcomes in breast cancer patients using the **METABRIC RNA + Mutation dataset**, combining classical survival analysis and machine learning-based classification. The pipeline includes **mutation profiling**, **Kaplan-Meier survival analysis**, **Cox Proportional Hazards modeling**, **feature engineering from gene expression**, and **binary classification (long vs short survival)** using **Random Forest** and **SHAP** for model interpretation.
+
+---
+
+## 🧾 Dataset
+
+* **Name**: `METABRIC_RNA_Mutation.csv`
+* **Source**: [METABRIC dataset on Kaggle](https://www.kaggle.com/datasets/raghadalharbi/breast-cancer-gene-expression-profiles-metabric)
+* **Content**:
+
+  * Clinical metadata
+  * Gene mutation status
+  * mRNA expression levels (z-scores)
+  * Survival outcome data for \~1900 patients
+
+---
+
+## ⚙️ Workflow Summary
+
+### 1️⃣ Data Exploration & Visualization
+
+* Load and inspect missing values
+* Visualize:
+
+  * Age at Diagnosis
+  * Type of Breast Surgery
+  * Cancer Type
+
+### 2️⃣ Mutation-Based Survival Analysis
+
+* Create binary flags for mutation columns (`_mut` suffix)
+* Kaplan-Meier estimator with log-rank test for top genes
+* Visualize survival difference for top 3 genes
+
+### 3️⃣ Cox Proportional Hazards Model
+
+* Fit multivariate Cox model on top mutated genes
+* Interpret hazard ratios
+
+---
+
+## 🧪 Feature Engineering from mRNA Expression
+
+### ➕ Added Features:
+
+* `GeneExpression_Average` = mean expression per patient
+* `PCA_1` to `PCA_5` = top 5 principal components from expression matrix
+
+These features are saved to `METABRIC_features.csv` for downstream ML.
+
+---
+
+## 🤖 Machine Learning: Predicting Survival Group
+
+### 📌 Task:
+
+Predict whether a patient survived **≥ 60 months** using engineered features.
+
+### 🔍 Features Used:
+
+* `GeneExpression_Average`, `PCA_1`, `PCA_2`, `PCA_3`, `PCA_4`, `PCA_5`
+
+### ✅ Model:
+
+* `RandomForestClassifier` from scikit-learn
+
+### 📈 Evaluation:
+
+* **ROC AUC Score**: `0.999`
+* **Confusion Matrix**:
+
+  ```
+  [[ 94   0]
+   [  4 283]]
+  ```
+* **Classification Report**:
+
+  * Precision: 0.96 (class 0), 1.00 (class 1)
+  * Accuracy: 0.99
+
+### 🧠 Model Interpretation (SHAP):
+
+* Used `shap.TreeExplainer` to understand feature importance
+* Visualized both bar and beeswarm plots
+
+---
+
+## 📂 Project Structure
+
+```
+METABRIC_Project/
+│
+├── data/
+│   ├── METABRIC_RNA_Mutation.csv
+│   └── METABRIC_features.csv
+│
+├── scripts/
+│   └── analysis.py
+│
+├── results/
+│   └── plots/
+│       ├── survival_analysis_by_*.png
+│       ├── age_distribution.png
+│       ├── shap_summary_bar.png
+│       ├── shap_beeswarm.png
+│       └── roc_curve.png
+│
+└── README.md
+```
+
+---
+
+## ▶️ How to Run
+
+```bash
+pip install pandas numpy matplotlib seaborn lifelines scikit-learn shap
+python analysis.py
+```
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License.
 
 
 
