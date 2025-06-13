@@ -1,3 +1,4 @@
+
 # 🔬 Survival Analysis and Machine Learning Prediction in Breast Cancer Patients (METABRIC Dataset)
 
 This project analyzes survival outcomes in breast cancer patients using the **METABRIC RNA + Mutation dataset**, combining classical survival analysis and machine learning-based classification. The pipeline includes **descriptive statistics**, **data visualization**, **mutation profiling**, **Kaplan-Meier survival analysis**, **Cox Proportional Hazards modeling**, **feature engineering from gene expression**, and **binary classification (long vs short survival)** using **Random Forest** and **SHAP** for model interpretation.
